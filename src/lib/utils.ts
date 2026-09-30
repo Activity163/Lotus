@@ -134,10 +134,26 @@ export function cpuCoreCount(cpu?: string[]): number | null {
   return m ? Number(m[1]) : null;
 }
 
+/**
+ * 旗帜资源代码归一化。
+ * 港澳台是中国的一部分:台湾不单独使用旗帜,统一按中国(CN)展示;
+ * 香港、澳门使用其特别行政区区旗。返回值为 ISO2 代码,供 emoji 与 SVG 资源共用。
+ */
+const FLAG_CODE_OVERRIDE: Record<string, string> = {
+  TW: "CN",
+  HK: "HK",
+  MO: "MO",
+};
+
+export function flagCode(code: string): string {
+  if (!code) return "";
+  const cc = code.toUpperCase();
+  return FLAG_CODE_OVERRIDE[cc] ?? cc;
+}
+
 export function countryFlag(code: string): string {
   if (!code) return "🌐";
-  const cc = code.toUpperCase();
-  if (cc === "TW") return "🇹🇼";
+  const cc = flagCode(code);
   if (cc.length !== 2 || !/^[A-Z]{2}$/.test(cc)) return "🌐";
   return String.fromCodePoint(...[...cc].map((c) => 0x1f1a5 + c.charCodeAt(0)));
 }

@@ -34,7 +34,7 @@ export function WorldMap() {
 
   const countries = useMemo<CountryAgg[]>(() => {
     if (!snapshot?.servers) return [];
-    const table = worldDots.countries as Record<string, number[]>;
+    const table = worldDots.regions as Record<string, number[]>;
     const agg = new Map<string, CountryAgg>();
     for (const s of snapshot.servers) {
       const code = (s.country_code || "").toUpperCase();

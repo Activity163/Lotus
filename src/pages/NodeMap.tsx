@@ -42,7 +42,7 @@ export default function NodeMapPage() {
   // 聚合各国家/地区的服务器状态
   const countries = useMemo<CountryAgg[]>(() => {
     if (!servers.length) return [];
-    const table = worldDots.countries as Record<string, number[]>;
+    const table = worldDots.regions as Record<string, number[]>;
     const agg = new Map<string, CountryAgg>();
 
     for (const s of servers) {

@@ -2,12 +2,12 @@
  * 构建期生成世界点阵地图数据(运行时零依赖):
  *   pnpm gen:map
  * 输出 src/assets/world-dots.json:
- *   { w, h, dots: [[x,y]...], countries: { "US": [x,y], ... } }
+ *   { w, h, dots: [[x,y]...], regions: { "US": [x,y], ... } }
  */
 import { writeFileSync } from "node:fs";
 import DottedMap from "dotted-map";
 
-// ISO2 -> 国家近似质心 [lat, lng](监控点阵地图精度要求低)
+// ISO2 -> 地区近似质心 [lat, lng](监控点阵地图精度要求低)
 const CENTROIDS = {
   US: [39.8, -98.6],
   CA: [56.1, -106.3],
@@ -149,10 +149,10 @@ const CENTROIDS = {
 const map = new DottedMap({ height: 60, grid: "diagonal" });
 const points = map.getPoints();
 
-const countries = {};
+const regions = {};
 for (const [code, [lat, lng]] of Object.entries(CENTROIDS)) {
   const pin = map.addPin({ lat, lng });
-  countries[code] = [Math.round(pin.x * 100) / 100, Math.round(pin.y * 100) / 100];
+  regions[code] = [Math.round(pin.x * 100) / 100, Math.round(pin.y * 100) / 100];
 }
 
 let maxX = 0;
@@ -167,10 +167,10 @@ const out = {
   w: Math.ceil(maxX) + 1,
   h: Math.ceil(maxY) + 1,
   dots,
-  countries,
+  regions,
 };
 
 writeFileSync(new URL("../src/assets/world-dots.json", import.meta.url), JSON.stringify(out));
 console.log(
-  `world-dots.json: ${dots.length} dots, ${Object.keys(countries).length} countries, viewBox 0 0 ${out.w} ${out.h}`,
+  `world-dots.json: ${dots.length} dots, ${Object.keys(regions).length} regions, viewBox 0 0 ${out.w} ${out.h}`,
 );
