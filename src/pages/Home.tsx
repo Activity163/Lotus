@@ -161,13 +161,13 @@ export default function Home() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={t("searchPlaceholder")}
-              className="h-8 w-full rounded-lg border border-line bg-surface pl-8 pr-3 text-xs text-fg outline-none transition-colors placeholder:text-faint focus:border-line-strong sm:w-52"
+              className="h-8 w-full rounded-lg border border-line bg-surface/55 pl-8 pr-3 text-xs text-fg outline-none transition-colors placeholder:text-faint hover:bg-surface/75 focus:border-line-strong focus:bg-surface/75 sm:w-52"
             />
           </div>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value as SortKey)}
-            className="h-8 shrink-0 cursor-pointer appearance-none rounded-lg border border-line bg-surface px-3 pr-7 text-xs text-fg-2 outline-none transition-colors focus:border-line-strong"
+            className="h-8 shrink-0 cursor-pointer appearance-none rounded-lg border border-line bg-surface/55 px-3 pr-7 text-xs text-fg-2 outline-none transition-colors hover:bg-surface/75 focus:border-line-strong focus:bg-surface/75"
             style={{
               backgroundImage:
                 "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 16 16'%3E%3Cpath fill='%23888' d='M4.5 6l3.5 4 3.5-4z'/%3E%3C/svg%3E\")",
@@ -183,7 +183,7 @@ export default function Home() {
           </select>
 
           {/* 视图模式切换 */}
-          <div className="flex items-center gap-0.5 rounded-lg border border-line bg-surface p-0.5 shrink-0">
+          <div className="flex items-center gap-0.5 rounded-lg border border-line bg-surface/55 p-0.5 shrink-0">
             <button
               type="button"
               onClick={() => toggleViewMode("card")}
@@ -319,7 +319,7 @@ function GroupPill({
         "flex h-8 shrink-0 items-center gap-1.5 whitespace-nowrap rounded-lg border px-3 text-xs font-medium transition-all",
         active
           ? "border-line-strong bg-surface-2 text-fg"
-          : "border-transparent text-muted hover:bg-surface hover:text-fg-2",
+          : "border-line bg-surface/55 text-muted hover:bg-surface/75 hover:text-fg-2",
       )}
     >
       {label}

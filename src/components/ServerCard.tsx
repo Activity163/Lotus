@@ -116,7 +116,7 @@ export const ServerCard = memo(function ServerCard({
     <Link
       to={`/server/${server.id}`}
       className={cn(
-        "card card-hover group flex flex-col gap-3.5 p-4",
+        "card card-hover group flex flex-col gap-3.5 p-4 opacity-55 hover:opacity-100",
         animateIn && "fade-up",
         // 离线:整体降饱和,内容区淡化但标题保留对比度
         !online && "saturate-50 [&_.dim-offline]:opacity-55",

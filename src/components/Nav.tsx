@@ -50,137 +50,139 @@ export function Nav({ siteName }: { siteName: string }) {
     );
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-bg/75 backdrop-blur-xl">
-      <div className="mx-auto flex h-14 max-w-screen-xl items-center gap-2 px-4 sm:px-6">
-        <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2.5">
-          <LotusMark className="size-6 shrink-0 text-accent" />
-          <div className="flex min-w-0 items-baseline gap-2">
-            <span className="max-w-36 truncate text-[15px] font-semibold tracking-tight sm:max-w-none">
-              {siteName}
-            </span>
-            {window.CustomDesc && (
-              <span className="hidden truncate text-xs text-faint md:block">
-                {window.CustomDesc}
+    <header className="sticky top-0 z-40 pt-3">
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6">
+        <div className="flex h-14 items-center gap-2 rounded-card border border-line bg-bg/75 px-3 opacity-55 shadow-xs backdrop-blur-xl transition-opacity duration-200 hover:opacity-100 sm:px-4">
+          <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2.5">
+            <LotusMark className="size-6 shrink-0 text-accent" />
+            <div className="flex min-w-0 items-baseline gap-2">
+              <span className="max-w-36 truncate text-[15px] font-semibold tracking-tight sm:max-w-none">
+                {siteName}
               </span>
-            )}
-          </div>
-        </Link>
+              {window.CustomDesc && (
+                <span className="hidden truncate text-xs text-faint md:block">
+                  {window.CustomDesc}
+                </span>
+              )}
+            </div>
+          </Link>
 
-        {/* 移动端可横向滑动,自定义外链不丢失 */}
-        <nav
-          ref={navRef}
-          className="no-scrollbar relative ml-2 flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto sm:ml-4 sm:flex-none"
-        >
-          <NavLink to="/" end className={tabClass} data-active={pathname === "/"}>
-            {t("overview")}
-          </NavLink>
-          <NavLink to="/map" className={tabClass} data-active={pathname.startsWith("/map")}>
-            {t("map")}
-          </NavLink>
-          <NavLink
-            to="/services"
-            className={tabClass}
-            data-active={pathname.startsWith("/services")}
+          {/* 移动端可横向滑动,自定义外链不丢失 */}
+          <nav
+            ref={navRef}
+            className="no-scrollbar relative ml-2 flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto sm:ml-4 sm:flex-none"
           >
-            {t("services")}
-          </NavLink>
-          {customLinks.map((l) => (
+            <NavLink to="/" end className={tabClass} data-active={pathname === "/"}>
+              {t("overview")}
+            </NavLink>
+            <NavLink to="/map" className={tabClass} data-active={pathname.startsWith("/map")}>
+              {t("map")}
+            </NavLink>
+            <NavLink
+              to="/services"
+              className={tabClass}
+              data-active={pathname.startsWith("/services")}
+            >
+              {t("services")}
+            </NavLink>
+            {customLinks.map((l) => (
+              <a
+                key={l.link}
+                href={l.link}
+                target="_blank"
+                rel="noreferrer"
+                className="whitespace-nowrap rounded-md px-3 py-2 text-[13px] font-medium text-muted transition-colors hover:text-fg-2"
+              >
+                {l.name}
+              </a>
+            ))}
+            {indicator && (
+              <span
+                className="absolute bottom-0 h-0.5 rounded-full bg-accent transition-[left,width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
+                style={{ left: indicator.left, width: indicator.width }}
+              />
+            )}
+          </nav>
+
+          <div className="ml-auto flex shrink-0 items-center gap-1">
+            {/* 连接状态 */}
+            <span
+              className="mr-1 flex items-center gap-1.5 text-[11px] text-faint"
+              title={connected ? t("connected") : t("connecting")}
+            >
+              <span
+                className={cn(
+                  "size-1.5 rounded-full",
+                  connected ? "bg-up animate-pulse-soft" : "bg-warn",
+                )}
+              />
+              <span className="hidden font-mono uppercase tracking-wider md:block">
+                {connected ? "live" : "…"}
+              </span>
+            </span>
+
+            <button
+              type="button"
+              onClick={() => setLang(lang === "zh-CN" ? "en" : "zh-CN")}
+              className="hit-target rounded-md px-2.5 py-2 font-mono text-[11px] font-medium uppercase tracking-wider text-muted transition-colors hover:bg-surface-2 hover:text-fg"
+            >
+              {lang === "zh-CN" ? "中" : "EN"}
+            </button>
+
+            {/* 管理后台入口(同源 /dashboard) */}
             <a
-              key={l.link}
-              href={l.link}
+              href="/dashboard"
               target="_blank"
               rel="noreferrer"
-              className="whitespace-nowrap rounded-md px-3 py-2 text-[13px] font-medium text-muted transition-colors hover:text-fg-2"
+              className="hit-target rounded-md p-2 text-muted transition-colors hover:bg-surface-2 hover:text-fg"
+              aria-label={t("admin")}
+              title={t("admin")}
             >
-              {l.name}
+              <svg viewBox="0 0 16 16" fill="none" className="size-4">
+                <path
+                  d="M8 1.7 2.7 4v4.2c0 3 2.2 5.3 5.3 6.1 3.1-.8 5.3-3.1 5.3-6.1V4L8 1.7Z"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M8 7.8a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2Zm-2.8 3.4c.5-1.3 1.5-2 2.8-2s2.3.7 2.8 2"
+                  stroke="currentColor"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                />
+              </svg>
             </a>
-          ))}
-          {indicator && (
-            <span
-              className="absolute bottom-0 h-0.5 rounded-full bg-accent transition-[left,width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]"
-              style={{ left: indicator.left, width: indicator.width }}
-            />
-          )}
-        </nav>
 
-        <div className="ml-auto flex shrink-0 items-center gap-1">
-          {/* 连接状态 */}
-          <span
-            className="mr-1 flex items-center gap-1.5 text-[11px] text-faint"
-            title={connected ? t("connected") : t("connecting")}
-          >
-            <span
-              className={cn(
-                "size-1.5 rounded-full",
-                connected ? "bg-up animate-pulse-soft" : "bg-warn",
+            <button
+              type="button"
+              onClick={() =>
+                setTheme(theme === "system" ? "light" : theme === "light" ? "dark" : "system")
+              }
+              className="hit-target rounded-md p-2 text-muted transition-colors hover:bg-surface-2 hover:text-fg"
+              aria-label={
+                theme === "system"
+                  ? t("themeSystem")
+                  : theme === "light"
+                    ? t("themeLight")
+                    : t("themeDark")
+              }
+            >
+              {theme === "system" ? (
+                <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
+                  <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm0 1a6 6 0 0 1 0 12V2Z" />
+                </svg>
+              ) : resolved === "dark" ? (
+                <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
+                  <path d="M8 1.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V2a.5.5 0 0 1 .5-.5ZM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5ZM2 8a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1A.5.5 0 0 1 2 8Zm10.5-.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1ZM3.05 3.05a.5.5 0 0 1 .707 0l.707.707a.5.5 0 1 1-.707.707l-.707-.707a.5.5 0 0 1 0-.707Zm8.486 8.486a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1-.707.707l-.707-.707a.5.5 0 0 1 0-.707Zm1.414-8.486a.5.5 0 0 1 0 .707l-.707.707a.5.5 0 1 1-.707-.707l.707-.707a.5.5 0 0 1 .707 0ZM4.464 11.536a.5.5 0 0 1 0 .707l-.707.707a.5.5 0 0 1-.707-.707l.707-.707a.5.5 0 0 1 .707 0Z" />
+                </svg>
+              ) : (
+                <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
+                  <path d="M6.2 1.8a6.5 6.5 0 1 0 8 8 .5.5 0 0 0-.62-.62 5 5 0 0 1-6.76-6.76.5.5 0 0 0-.62-.62Z" />
+                </svg>
               )}
-            />
-            <span className="hidden font-mono uppercase tracking-wider md:block">
-              {connected ? "live" : "…"}
-            </span>
-          </span>
-
-          <button
-            type="button"
-            onClick={() => setLang(lang === "zh-CN" ? "en" : "zh-CN")}
-            className="hit-target rounded-md px-2.5 py-2 font-mono text-[11px] font-medium uppercase tracking-wider text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-          >
-            {lang === "zh-CN" ? "中" : "EN"}
-          </button>
-
-          {/* 管理后台入口(同源 /dashboard) */}
-          <a
-            href="/dashboard"
-            target="_blank"
-            rel="noreferrer"
-            className="hit-target rounded-md p-2 text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-            aria-label={t("admin")}
-            title={t("admin")}
-          >
-            <svg viewBox="0 0 16 16" fill="none" className="size-4">
-              <path
-                d="M8 1.7 2.7 4v4.2c0 3 2.2 5.3 5.3 6.1 3.1-.8 5.3-3.1 5.3-6.1V4L8 1.7Z"
-                stroke="currentColor"
-                strokeWidth="1.3"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M8 7.8a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2Zm-2.8 3.4c.5-1.3 1.5-2 2.8-2s2.3.7 2.8 2"
-                stroke="currentColor"
-                strokeWidth="1.3"
-                strokeLinecap="round"
-              />
-            </svg>
-          </a>
-
-          <button
-            type="button"
-            onClick={() =>
-              setTheme(theme === "system" ? "light" : theme === "light" ? "dark" : "system")
-            }
-            className="hit-target rounded-md p-2 text-muted transition-colors hover:bg-surface-2 hover:text-fg"
-            aria-label={
-              theme === "system"
-                ? t("themeSystem")
-                : theme === "light"
-                  ? t("themeLight")
-                  : t("themeDark")
-            }
-          >
-            {theme === "system" ? (
-              <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
-                <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1Zm0 1a6 6 0 0 1 0 12V2Z" />
-              </svg>
-            ) : resolved === "dark" ? (
-              <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
-                <path d="M8 1.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0V2a.5.5 0 0 1 .5-.5ZM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 1.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-1 0v-1a.5.5 0 0 1 .5-.5ZM2 8a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1A.5.5 0 0 1 2 8Zm10.5-.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1ZM3.05 3.05a.5.5 0 0 1 .707 0l.707.707a.5.5 0 1 1-.707.707l-.707-.707a.5.5 0 0 1 0-.707Zm8.486 8.486a.5.5 0 0 1 .707 0l.707.707a.5.5 0 0 1-.707.707l-.707-.707a.5.5 0 0 1 0-.707Zm1.414-8.486a.5.5 0 0 1 0 .707l-.707.707a.5.5 0 1 1-.707-.707l.707-.707a.5.5 0 0 1 .707 0ZM4.464 11.536a.5.5 0 0 1 0 .707l-.707.707a.5.5 0 0 1-.707-.707l.707-.707a.5.5 0 0 1 .707 0Z" />
-              </svg>
-            ) : (
-              <svg viewBox="0 0 16 16" fill="currentColor" className="size-4">
-                <path d="M6.2 1.8a6.5 6.5 0 1 0 8 8 .5.5 0 0 0-.62-.62 5 5 0 0 1-6.76-6.76.5.5 0 0 0-.62-.62Z" />
-              </svg>
-            )}
-          </button>
+            </button>
+          </div>
         </div>
       </div>
     </header>

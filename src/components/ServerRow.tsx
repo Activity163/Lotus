@@ -78,7 +78,7 @@ export const ServerRow = memo(function ServerRow({
     <Link
       to={`/server/${server.id}`}
       className={cn(
-        "card card-hover group flex flex-col gap-3 p-3.5 md:grid md:grid-cols-12 md:items-center md:gap-4 md:py-2.5",
+        "card card-hover group flex flex-col gap-3 p-3.5 opacity-55 hover:opacity-100 md:grid md:grid-cols-12 md:items-center md:gap-4 md:py-2.5",
         animateIn && "fade-up",
         !online && "saturate-50 [&_.dim-offline]:opacity-55",
       )}

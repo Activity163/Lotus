@@ -46,7 +46,7 @@ export function StatsBar() {
   }, [snapshot]);
 
   return (
-    <section className="card grid grid-cols-2 divide-x divide-line md:grid-cols-4 [&>*:nth-child(n+3)]:border-t [&>*:nth-child(n+3)]:border-line md:[&>*:nth-child(n+3)]:border-t-0">
+    <section className="card opacity-55 hover:opacity-100 grid grid-cols-2 divide-x divide-line md:grid-cols-4 [&>*:nth-child(n+3)]:border-t [&>*:nth-child(n+3)]:border-line md:[&>*:nth-child(n+3)]:border-t-0">
       <Stat label={t("online")}>
         <span className="inline-flex items-baseline gap-1">
           <span className="text-up">
